@@ -1,0 +1,11 @@
+.mat-toolbar {
+    height: 100px;
+    min-height: 100px;
+}
+.example-spacer {
+    flex: 1 1 auto;
+  }
+  .example-full-width {
+    width: 100%;
+  }
+  

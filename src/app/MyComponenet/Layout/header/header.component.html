@@ -1,0 +1,22 @@
+<mat-toolbar color="primary">
+    <mat-toolbar-row fxLayout="row" fxLayout.xs="row" fxLayoutAlign="space-between center"
+        fxLayoutAlign.xs="space-between center">
+        <div fxLayout="row" fxLayout.xs="row" fxLayoutAlign="start center" fxLayoutAlign.xs="start start">
+            <button class="title" mat-flat-button color="primary"><mat-icon>home</mat-icon><span>Admin</span></button>
+            <div fxHide.xs="true">
+                <button mat-flat-button color="primary">Home</button>
+                <button mat-flat-button color="primary">Contact us</button>
+                <button mat-flat-button color="primary">About</button>
+            </div>
+        </div>
+        <div fxLayout="row" fxLayoutAlign="end center" fxLayout.xs="row" fxLayoutAlign.xs="end center">
+            <button mat-icon-button [matMenuTriggerFor]="menu" fxHide.gt-xs="true"><mat-icon>menu</mat-icon></button>
+            <mat-menu #menu="matMenu">
+                <button mat-menu-item>Home</button>
+                <button mat-menu-item>Contact us</button>
+                <button mat-menu-item>About</button>
+            </mat-menu>
+            <span fxHide.xs="true"><mat-icon>description</mat-icon>Marksheet</span>
+        </div>
+    </mat-toolbar-row>
+</mat-toolbar>

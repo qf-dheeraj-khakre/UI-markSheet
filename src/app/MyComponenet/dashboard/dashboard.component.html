@@ -1,0 +1,47 @@
+<mat-toolbar fxLayout="row" fxLayout.xs="column" fxLayoutAlign="start center" fxLayoutGap="5px">
+    <div fxFlex="50%" fxFlex.xs="100%">
+        <mat-form-field fxFlex="50%" fxFlex.xs="100%">
+            <mat-label>Sort Student</mat-label>
+            <mat-select>
+                <mat-option value="one">Ascending</mat-option>
+                <mat-option value="two">Descending</mat-option>
+            </mat-select>
+        </mat-form-field>
+    </div>
+    <div fxFlex="50%" fxFlex.xs="100%" fxLayoutAlign=" center">
+
+        <button mat-raised-button (click)="openDialog()"><mat-icon>create</mat-icon> Add Student</button>
+    </div>
+    <span class="example-spacer"></span>
+    <mat-form-field fxFlex="100%" fxLayout.sm="100%" class="example-full-width" appearance="outline">
+        <mat-label>Search Student here</mat-label>
+        <input matInput>
+        <mat-icon matSuffix>search</mat-icon>
+    </mat-form-field>
+</mat-toolbar>
+
+
+<mat-card>
+    <mat-card-header>
+        <mat-card-title>Actions Buttons</mat-card-title>
+        <mat-card-subtitle>End</mat-card-subtitle>
+    </mat-card-header>
+    <mat-card-actions align="end">
+        <button mat-button>LIKE</button>
+        <button mat-button>SHARE</button>
+    </mat-card-actions>
+</mat-card>
+<Grid container rowSpacing={1} columnSpacing={{ xs: 1, sm: 2, md: 3 }}>
+    <Grid item xs={6}>
+        <Item>1</Item>
+    </Grid>
+    <Grid item xs={6}>
+        <Item>2</Item>
+    </Grid>
+    <Grid item xs={6}>
+        <Item>3</Item>
+    </Grid>
+    <Grid item xs={6}>
+        <Item>4</Item>
+    </Grid>
+</Grid>
