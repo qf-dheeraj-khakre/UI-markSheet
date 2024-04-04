@@ -8,55 +8,67 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatSelectModule } from '@angular/material/select';
 import {
   MatDialog,
-  MAT_DIALOG_DATA,
-  MatDialogRef,
   MatDialogTitle,
   MatDialogContent,
   MatDialogActions,
   MatDialogClose,
 } from '@angular/material/dialog';
 import { StudentFormComponent } from './student-form/student-form.component';
-import { Student } from '../../Model/classes/Student';
 import { StudentService } from '../../Services/student.service';
 import { HttpClientModule } from '@angular/common/http';
-import { MatCardModule } from '@angular/material/card';
+import { StudentCardComponent } from './student-card/student-card.component';
+import { MatDividerModule } from '@angular/material/divider';
+import { Overlay } from '@angular/cdk/overlay';
+import { Student } from '../../Model/classes/Student';
+
 
 
 @Component({
   selector: 'app-dashboard',
   standalone: true,
-  imports: [MatToolbarModule, MatIconModule, MatInputModule, FlexLayoutModule,
+  imports: [
+    MatToolbarModule,
+    MatIconModule,
+    MatInputModule,
+    FlexLayoutModule,
     MatDialogTitle,
     MatDialogContent,
     MatDialogActions,
     MatDialogClose,
     HttpClientModule,
-    MatButtonModule, MatFormFieldModule, MatSelectModule, MatInputModule, MatCardModule],
+    MatInputModule,
+    MatDividerModule,
+    MatButtonModule,
+    MatFormFieldModule,
+    MatSelectModule,
+    MatInputModule,
+    StudentCardComponent
+  ],
   templateUrl: './dashboard.component.html',
   styleUrl: './dashboard.component.css'
 })
-export class DashboardComponent implements OnInit {
+export class DashboardComponent {
 
-  constructor(public dialog: MatDialog, public StudentService: StudentService) { }
+  constructor(
+    public dialog: MatDialog,
+    public StudentService: StudentService,
+    public overlay: Overlay
+  ) { }
 
 
 
-  public student: Student[] = [];
 
-  ngOnInit(): void {
-    this.StudentService.GetAllStudent().subscribe({
-      next: res => {
-        console.log(res);
-        this.student = res;
-        console.log(this.student);
-      },
-      error: error => {
-        console.log(error);
-      }
-    })
-  }
   openDialog(): void {
-    const dialogRef = this.dialog.open(StudentFormComponent);
+    let student = new Student();
+    const dialogRef = this.dialog.open(StudentFormComponent,
+      {
+        width: '90vw',
+        maxHeight: '90vh',
+        minHeight: '50vh',
+        data: { student: student, view: false },
+        scrollStrategy: this.overlay.scrollStrategies.noop()
+      }
+    );
 
     dialogRef.afterClosed().subscribe(result => {
       console.log('The dialog was closed');

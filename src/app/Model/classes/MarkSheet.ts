@@ -14,6 +14,10 @@ export class MarkSheet {
     public issueDate!: string
     public StudentId!: number
 
+    constructor() {
+
+    }
+
 
 
 }

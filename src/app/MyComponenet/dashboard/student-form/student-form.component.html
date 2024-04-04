@@ -1,1 +1,101 @@
-<p>student-form works!</p>
+<form class="example-form" [formGroup]="studentForm" class="Student-form" (ngSubmit)="onSubmit()">
+    <h1 class="header" fxLayoutAlign="center center">
+        Add Student
+    </h1>
+    <div fxLayout="row wrap" fxLayout.xs="column" fxLayoutAlign="start center" fxLayoutGap="20px grid"
+        fxLayoutAlign.xs="center start">
+        <mat-form-field fxFlex="50%" fxFlex.xs="100" class="example-full-width" appearance="outline">
+            <mat-label>Enter Name </mat-label>
+            <input matInput placeholder="Enter Name Here" formControlName="name" [readonly]="isReadonly">
+        </mat-form-field>
+        <mat-form-field class="example-full-width" appearance="outline" fxFlex="50%" fxFlex.xs="100%">
+            <mat-label>Enter Roll Number </mat-label>
+            <input matInput placeholder="Enter Roll Number Here" formControlName="studentRollNumber"
+                [readonly]="isReadonly">
+        </mat-form-field>
+    </div>
+
+    <div fxLayout="row wrap" fxLayout.xs="column" fxLayoutAlign="start center" fxLayoutGap="20px grid"
+        fxLayoutAlign.xs="center start">
+        <mat-form-field class="example-full-width" appearance="outline" fxFlex="50%" fxFlex.xs="100%">
+            <mat-label>Enter College Name </mat-label>
+            <input matInput placeholder="Enter College Name Here" formControlName="collageName" [readonly]="isReadonly">
+        </mat-form-field>
+        <mat-form-field class="example-full-width" appearance="outline" fxFlex="50%" fxFlex.xs="100%">
+            <mat-label>Enter Branch</mat-label>
+            <input matInput placeholder="Enter Your Age Here" formControlName="branch" [readonly]="isReadonly">
+        </mat-form-field>
+    </div>
+
+    <div fxLayout="row wrap" fxLayout.xs="column" fxLayoutAlign="start center" fxLayoutGap="20px grid"
+        fxLayoutAlign.xs="center start">
+        <mat-form-field class="example-full-width" appearance="outline" fxFlex="50%" fxFlex.xs="100%">
+            <mat-label>Enter Student Email</mat-label>
+            <input matInput placeholder="student@example.com" formControlName="email" [readonly]="isReadonly">
+        </mat-form-field>
+        <mat-form-field class="example-full-width" appearance="outline" fxFlex="50%" fxFlex.xs="100%">
+            <mat-label>Enter your Age </mat-label>
+            <input matInput placeholder="Enter Your Age Here" formControlName="age" [readonly]="isReadonly">
+        </mat-form-field>
+    </div>
+    <div fxLayout="row wrap" fxLayout.xs="column" fxLayoutAlign="start center" fxLayoutGap="20px grid"
+        fxLayoutAlign.xs="center start">
+        <mat-form-field class="example-full-width" appearance="outline" fxFlex="50%" fxFlex.xs="100%">
+            <mat-label>Enter Contact Number</mat-label>
+            <input matInput placeholder="+911233..." formControlName="number" [readonly]="isReadonly">
+        </mat-form-field>
+
+        <mat-form-field appearance="outline" class="example-full-width" fxFlex="50%" fxFlex.xs="100%">
+            <mat-label>Choose a Birth date</mat-label>
+            <input matInput [matDatepicker]="picker" placeholder="DD/MM/YYYY" formControlName="DOB"
+                [readonly]="isReadonly">
+            <mat-datepicker-toggle matIconSuffix [for]="picker">
+                <mat-icon matDatepickerToggleIcon>keyboard_arrow_down</mat-icon>
+            </mat-datepicker-toggle>
+            <mat-datepicker #picker></mat-datepicker>
+        </mat-form-field>
+
+    </div>
+    <div fxLayout="row wrap" fxLayout.xs="column" fxLayoutAlign="start center" fxLayoutGap="20px grid"
+        fxLayoutAlign.xs="center start">
+
+        <mat-expansion-panel class="expansion" fxFlex="50%" fxFlex.xs="100%" (opened)="panelOpenState = true"
+            (closed)="panelOpenState = false">
+            <mat-expansion-panel-header fxLayout="row" fxLayoutAlign="center center">
+                <mat-panel-title color="primary" fxFlex="100">
+                    Please Ready Term & Condition
+                </mat-panel-title>
+                <mat-panel-description fxFlex="100" fxLayoutAlign="center center">
+                    click here
+                </mat-panel-description>
+            </mat-expansion-panel-header>
+            <p>Acceptance of Terms: By enrolling, the student agrees to abide by these Terms and Conditions, as well as
+                any additional rules or policies set by the institution.
+                Eligibility: The student confirms that they meet any age, academic, or other eligibility requirements.
+            </p>
+        </mat-expansion-panel>
+        <mat-checkbox fxFlex="50" fxFlex.xs="100%" class="example-margin" required>Check me!</mat-checkbox>
+    </div>
+
+
+    <div class="btn" fxLayout="row" fxLayout.xs="column" fxLayoutAlign="start center" fxLayoutGap="20px"
+        fxLayoutAlign.xs="center center">
+        @if (buttonforform==='') {
+        <button type="submit" mat-raised-button color="primary"><mat-icon>create</mat-icon> Add Student</button>
+        <button type="reset" mat-raised-button color="warn"><mat-icon>cached</mat-icon>Reset</button>
+
+        }
+        @else if (data.view) {
+        <button mat-raised-button color="primary" (click)="close()"><mat-icon>close</mat-icon>close view</button>
+
+        }
+        @else {
+        <button (submit)="UpdateStudent()" mat-raised-button color="primary"><mat-icon>update</mat-icon> Update
+            Student</button>
+
+        }
+
+    </div>
+
+
+</form>
