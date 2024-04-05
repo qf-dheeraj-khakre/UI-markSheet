@@ -15,10 +15,10 @@ export class StudentService {
     return this._httpClient.get<Student[]>("http://localhost:5173/api/Student");
   }
 
-  GetStudetnBtId(studentID: number): Observable<Student> {
-    return this._httpClient.get<Student>(`http://localhost:5173/api/Student/getByRoolNo/ ${studentID}`)
+  GetStudetnBtId(studentID: string): Observable<Student> {
+    return this._httpClient.get<Student>(`http://localhost:5173/api/Student/getByRollNo/${studentID}`)
   }
-  DeleteStudent(studentID: number): Observable<Student> {
+  DeleteStudent(studentID: string): Observable<Student> {
     return this._httpClient.delete<Student>(`http://localhost:5173/api/Student/${studentID}`)
   }
   EditStudent(Student: Student): Observable<any> {
