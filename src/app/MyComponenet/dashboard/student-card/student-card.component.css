@@ -1,0 +1,14 @@
+ng-container{
+    padding: auto;
+}
+.custom-card {
+    border: 1px solid #180a6c; 
+}
+.header{
+    background-color: #0b095b;
+    color: white;
+}
+.card{
+    margin-top: 20px;
+  
+}
