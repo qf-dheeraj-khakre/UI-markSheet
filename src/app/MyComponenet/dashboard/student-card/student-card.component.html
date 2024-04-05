@@ -12,7 +12,7 @@ start" fxLayoutGap="25px grid">
             </mat-card-header>
             <mat-card-actions align="end">
                 <button mat-icon-button matTooltip="Go to Marksheet"
-                    (click)="GotoMarksheet(item?.studentRollNumber)"><mat-icon>description</mat-icon></button>
+                    (click)="GotoMarksheet(item.studentRollNumber)"><mat-icon>description</mat-icon></button>
                 <button mat-icon-button matTooltip="View Student" (click)="ViewStudent(item.studentRollNumber)">
                     <mat-icon>visibility</mat-icon></button>
                 <button mat-icon-button matTooltip="Edit Student" (click)="EditStudent(item.studentRollNumber)">
@@ -27,6 +27,6 @@ start" fxLayoutGap="25px grid">
 
 
     }@empty {
-    <h1 fxLayoutAlign="center">No item exist</h1>
+    <h1 fxLayoutAlign="center center">No item exist</h1>
     }
 </div>

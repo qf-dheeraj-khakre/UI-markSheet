@@ -14,10 +14,9 @@ import { Router } from '@angular/router';
 import { DialogRef } from '@angular/cdk/dialog';
 import { MAT_DIALOG_DATA, MatDialog, MatDialogRef } from '@angular/material/dialog';
 import { OverlayService } from '../../../shared/spinner/overlay/overlay.service';
-import { OverlayRef } from '@angular/cdk/overlay';
-import { ProgressSpinnerComponent } from '../../../shared/spinner/progress-spinner/progress-spinner.component';
-import { tick } from '@angular/core/testing';
 import { StudentCardComponent } from '../student-card/student-card.component';
+import { ProgressSpinnerComponent } from '../../../shared/spinner/progress-spinner/progress-spinner.component';
+import { OverlayRef } from '@angular/cdk/overlay';
 @Component({
   selector: 'app-student-form',
   standalone: true,
@@ -38,12 +37,7 @@ import { StudentCardComponent } from '../student-card/student-card.component';
 })
 
 export class StudentFormComponent implements OnInit {
-  close() {
-    this.dialogRef.close();
-  }
-  UpdateStudent() {
 
-  }
   panelOpenState: boolean = false;
   student: Student = new Student();
   studentForm: FormGroup = new FormGroup({});
@@ -62,12 +56,8 @@ export class StudentFormComponent implements OnInit {
 
   ngOnInit(): void {
     this.isReadonly = this.data.view;
-    console.log(this.isReadonly);
     this.buttonforform = this.data.student.studentRollNumber;
-
     this.student = this.data.student;
-
-    console.log(this.student);
     this.studentForm = this.fb.group({
       studentRollNumber: [this.student.studentRollNumber || '', Validators.required],
       name: [this.student.name || '', Validators.required],
@@ -83,27 +73,54 @@ export class StudentFormComponent implements OnInit {
 
     if (this.studentForm.valid) {
       this.student = this.studentForm.value;
-      console.log(this.studentForm.value);
-      this.studentService.addStudent(this.student).subscribe({
-        next: res => {
-          console.log(res);
-          this._snackBar.open("Student Added Successfully ", 'Action', {
-            duration: 3000
-          });
-          this._router.navigate(["/deshboard"]);
-          this._dialogRef.close();
+      if (!(this.data.student.studentRollNumber === '')) {
+        let overlay: OverlayRef;
+        overlay = this._previewProgressSpinner.open({ hasBackdrop: true }, ProgressSpinnerComponent);
+        this.student.id = this.data.student.id;
+        this.studentService.EditStudent(this.student).subscribe({
+          next: res => {
+            this._snackBar.open("Student Edit Successfully ", 'Action', {
+              duration: 3000
+            });
+            overlay.detach();
+            this._router.navigate(["/deshboard"]);
+            this._dialogRef.close();
 
-        },
-        error: res => {
-          console.log(res);
-          this._snackBar.open("Something went wrong while adding student, please try again later", 'Action', {
-            duration: 3000
-          });
-        }
-      })
+          },
+          error: res => {
+            this._snackBar.open("Something went wrong while adding student, please try again later", 'Action', {
+              duration: 3000
+            });
+            overlay.detach();
+          }
+        })
+
+      } else {
+        let overlay: OverlayRef;
+        overlay = this._previewProgressSpinner.open({ hasBackdrop: true }, ProgressSpinnerComponent);
+        this.studentService.addStudent(this.student).subscribe({
+          next: res => {
+            this._snackBar.open("Student Added Successfully ", 'Action', {
+              duration: 3000
+            });
+            overlay.detach();
+            this._router.navigate(["/deshboard"]);
+            this._dialogRef.close();
+          },
+          error: res => {
+            this._snackBar.open("Something went wrong while adding student, please try again later", 'Action', {
+              duration: 3000
+            });
+            overlay.detach();
+          }
+        })
+      }
     } else {
       console.log('Form is not valid');
     }
+  }
+  close() {
+    this.dialogRef.close();
   }
 
 }

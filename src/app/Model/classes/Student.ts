@@ -2,7 +2,7 @@ import { MarkSheet } from "./MarkSheet";
 
 export class Student {
 
-    public Id: Number
+    public id: Number
     public studentRollNumber!: string;
     public name: string
     public age: number
@@ -17,7 +17,7 @@ export class Student {
     public markSheets: MarkSheet[]
 
     constructor() {
-        this.Id = 0;
+        this.id = 0;
         this.studentRollNumber = '';
         this.name = ''
         this.password = ""

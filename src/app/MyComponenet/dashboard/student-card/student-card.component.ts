@@ -43,12 +43,15 @@ export class StudentCardComponent implements OnInit {
   ) { }
 
   DeleteStudent(arg0: string) {
+    let overlay: OverlayRef;
+    overlay = this._previewProgressSpinner.open({ hasBackdrop: true }, ProgressSpinnerComponent);
     this.StudentService.DeleteStudent(arg0).subscribe({
       next: res => {
         console.log(res);
         this._snackBar.open("Student delete Successfully ", 'Action', {
           duration: 3000
         });
+        overlay.detach();
         this.router.navigate(['/deshboard']);
       },
       error: error => {
@@ -56,15 +59,15 @@ export class StudentCardComponent implements OnInit {
         this._snackBar.open("Something went wrong while Deleting student, please try again later", 'Action', {
           duration: 3000
         });
+        overlay.detach();
       }
     })
   }
-  EditStudent(arg0: string) {
+  EditStudent(id: string) {
     let overlay: OverlayRef;
     overlay = this._previewProgressSpinner.open({ hasBackdrop: true }, ProgressSpinnerComponent);
-
     let student = new Student();
-    this.StudentService.GetStudetnBtId(arg0).subscribe({
+    this.StudentService.GetStudetnBtId(id).subscribe({
       next: rep => {
         student = rep;
         const dialogRef = this.dialog.open(StudentFormComponent,
@@ -80,18 +83,16 @@ export class StudentCardComponent implements OnInit {
       },
       error: error => {
         console.log(error);
-
+        overlay.detach();
       }
     })
-
-
   }
-  ViewStudent(arg0: string) {
+  ViewStudent(id: string) {
     let overlay: OverlayRef;
     overlay = this._previewProgressSpinner.open({ hasBackdrop: true }, ProgressSpinnerComponent);
 
     let student = new Student();
-    this.StudentService.GetStudetnBtId(arg0).subscribe({
+    this.StudentService.GetStudetnBtId(id).subscribe({
       next: rep => {
         student = rep;
         const dialogRef = this.dialog.open(StudentFormComponent,
@@ -107,19 +108,27 @@ export class StudentCardComponent implements OnInit {
       },
       error: error => {
         console.log(error);
-
+        overlay.detach();
       }
     })
-
   }
-  GotoMarksheet(arg0: string | undefined) {
-    throw new Error('Method not implemented.');
+  GotoMarksheet(id: string) {
+    let overlay: OverlayRef;
+    let Id: Number
+    overlay = this._previewProgressSpinner.open({ hasBackdrop: true }, ProgressSpinnerComponent);
+    this.StudentService.GetStudetnBtId(id).subscribe({
+      next: rep => {
+        Id = rep.id;
+        this.router.navigate(["/marksheet", Id])
+        overlay.detach();
+      },
+      error: error => {
+        console.log(error);
+        overlay.detach();
+      }
+    })
   }
-
-
-
   public student: Student[] = [];
-
   ngOnInit(): void {
     let overlay: OverlayRef;
     overlay = this._previewProgressSpinner.open({ hasBackdrop: true }, ProgressSpinnerComponent);

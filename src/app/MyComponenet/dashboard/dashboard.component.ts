@@ -48,16 +48,11 @@ import { Student } from '../../Model/classes/Student';
   styleUrl: './dashboard.component.css'
 })
 export class DashboardComponent {
-
   constructor(
     public dialog: MatDialog,
     public StudentService: StudentService,
     public overlay: Overlay
   ) { }
-
-
-
-
   openDialog(): void {
     let student = new Student();
     const dialogRef = this.dialog.open(StudentFormComponent,

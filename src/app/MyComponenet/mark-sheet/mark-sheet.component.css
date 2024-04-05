@@ -1,0 +1,20 @@
+.large-icon{
+    font-size: 20px;
+}
+.my-icon:hover{
+    color: blue;
+
+}
+.mat-toolbar {
+    height: 100px;
+    min-height: 100px;
+}
+.example-spacer {
+    flex: 1 1 auto;
+  }
+  .example-full-width {
+    width: 100%;
+  }
+ .Marksheet-table{
+    margin-top: 50px;
+ }
