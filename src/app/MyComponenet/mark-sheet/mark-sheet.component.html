@@ -1,0 +1,80 @@
+<mat-toolbar fxLayout="row" fxLayout.xs="column" fxLayoutAlign="start center" fxLayoutGap="5px">
+    <div fxFlex="50%" fxFlex.xs="100%">
+        <mat-form-field fxFlex="50%" fxFlex.xs="100%">
+            <mat-label>Sort Marksheet</mat-label>
+            <mat-select>
+                <mat-option value="one">Ascending</mat-option>
+                <mat-option value="two">Descending</mat-option>
+            </mat-select>
+        </mat-form-field>
+    </div>
+    <div fxFlex="50%" fxFlex.xs="100%" fxLayoutAlign=" center">
+
+        <button mat-raised-button (click)="openDialog()"><mat-icon>create</mat-icon> Add Marksheet</button>
+    </div>
+    <span class="example-spacer"></span>
+    <mat-form-field fxFlex="100%" fxHide.xs="true" class="example-full-width" appearance="outline">
+        <mat-label>Search Marksheet here</mat-label>
+        <input matInput>
+        <mat-icon matSuffix>search</mat-icon>
+    </mat-form-field>
+</mat-toolbar>
+
+
+<div class="Marksheet-table" fxLayout.xs="column" fxLayoutGap="30px" fxLayoutAlign="center center">
+    <div fxFlex="100" fxFlex.lt-md="auto">
+        <table mat-table [dataSource]="marksheets" class="mat-elevation-z8">
+            <ng-container matColumnDef="position">
+                <th mat-header-cell *matHeaderCellDef> No. </th>
+                <td mat-cell *matCellDef="let item; let i = index;">{{ i + 1 }}</td>
+            </ng-container>
+            <ng-container matColumnDef="semester">
+                <th mat-header-cell *matHeaderCellDef>Semester</th>
+                <td mat-cell *matCellDef="let element"> {{element.semester}} </td>
+            </ng-container>
+            <ng-container matColumnDef="result">
+                <th mat-header-cell *matHeaderCellDef>Result</th>
+                <td mat-cell *matCellDef="let element"> {{element.result}} </td>
+            </ng-container>
+            <ng-container matColumnDef="View">
+                <th mat-header-cell *matHeaderCellDef>View</th>
+                <td mat-cell *matCellDef="let element">
+                    <button mat-button matTooltip="View Marksheet" (click)="ViewMarksheet(element.markSheetId)">
+                        <mat-icon>visibility</mat-icon>
+                    </button>
+                </td>
+            </ng-container>
+
+            <ng-container matColumnDef="Edit">
+                <th mat-header-cell *matHeaderCellDef>Edit</th>
+                <td mat-cell *matCellDef="let element">
+                    <button mat-button matTooltip=" Edit Marksheet"
+                        (click)="EditMarksheet(element.markSheetId)"><mat-icon class="large-icon">edit</mat-icon>
+                    </button>
+                </td>
+            </ng-container>
+
+            <ng-container matColumnDef="Delete">
+                <th mat-header-cell *matHeaderCellDef>Delete</th>
+                <td mat-cell *matCellDef="let element">
+                    <button mat-button matTooltip=" Delete Marksheet" (click)="DeleteMarksheet(element.markSheetId)">
+                        <mat-icon class="large-icon">delete</mat-icon>
+                    </button>
+                </td>
+            </ng-container>
+            <ng-container matColumnDef="Download">
+                <th mat-header-cell *matHeaderCellDef>Download</th>
+                <td mat-cell *matCellDef="let element">
+                    <button mat-button matTooltip="Download marksheets"
+                        (click)="DownloadMarksheet(element.markSheetId)">
+                        <mat-icon class="my-icon">get_app</mat-icon>
+                    </button>
+                </td>
+            </ng-container>
+            <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+            <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+        </table>
+
+
+    </div>
+</div>
