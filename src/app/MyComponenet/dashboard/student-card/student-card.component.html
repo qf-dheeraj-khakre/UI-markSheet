@@ -1,0 +1,32 @@
+<div fxLayout="row wrap" fxLayout.xs="column" fxLayoutAlign="space-between center" fxLayoutAlign.xs="center
+start" fxLayoutGap="25px grid">
+    @for (item of student; track $index) {
+    <div class="card" fxFlex="25%" fxFlex.xs="100%">
+
+        <mat-card class="custom-card">
+            <h2 class="header"><mat-icon>account_circle</mat-icon>Student Frofile</h2>
+            <mat-card-header>
+                <mat-card-title>Studetn Name : <b>{{item?.name}}</b></mat-card-title>
+                <mat-card-subtitle>Roll-Number: <i>{{item?.studentRollNumber}}</i></mat-card-subtitle>
+
+            </mat-card-header>
+            <mat-card-actions align="end">
+                <button mat-icon-button matTooltip="Go to Marksheet"
+                    (click)="GotoMarksheet(item.studentRollNumber)"><mat-icon>description</mat-icon></button>
+                <button mat-icon-button matTooltip="View Student" (click)="ViewStudent(item.studentRollNumber)">
+                    <mat-icon>visibility</mat-icon></button>
+                <button mat-icon-button matTooltip="Edit Student" (click)="EditStudent(item.studentRollNumber)">
+                    <mat-icon>edit</mat-icon></button>
+                <button mat-icon-button matTooltip=" Delete Student" (click)="DeleteStudent(item.studentRollNumber)">
+                    <mat-icon>delete</mat-icon></button>
+            </mat-card-actions>
+        </mat-card>
+
+
+    </div>
+
+
+    }@empty {
+    <h1 fxLayoutAlign="center center">No item exist</h1>
+    }
+</div>

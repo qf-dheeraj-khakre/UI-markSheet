@@ -1,3 +1,10 @@
+.large-icon{
+    font-size: 20px;
+}
+.my-icon:hover{
+    color: blue;
+
+}
 .mat-toolbar {
     height: 100px;
     min-height: 100px;
@@ -8,8 +15,6 @@
   .example-full-width {
     width: 100%;
   }
- 
-  .card{
-    margin-top: 20px;
-  }
-  
+ .Marksheet-table{
+    margin-top: 50px;
+ }
