@@ -11,8 +11,10 @@
         <mat-form-field class="example-full-width" appearance="outline" fxFlex="50%" fxFlex.xs="100%">
             <mat-label>Student Status</mat-label>
             <mat-select formControlName="status">
+                <!-- @if (!isReadonly) { -->
                 <mat-option value="Regular">Regular</mat-option>
                 <mat-option value="IrRagular">Ir-Regular</mat-option>
+                <!-- } -->
             </mat-select>
         </mat-form-field>
     </div>
@@ -22,14 +24,16 @@
         <mat-form-field class="example-full-width" appearance="outline" fxFlex="50%" fxFlex.xs="100%">
             <mat-label>Student Result</mat-label>
             <mat-select formControlName="result">
+                <!-- @if (!isReadonly) { -->
                 <mat-option value="Pass">Pass</mat-option>
                 <mat-option value="Fail">Fail</mat-option>
                 <mat-option value="Back">Back</mat-option>
+                <!-- } -->
             </mat-select>
         </mat-form-field>
         <mat-form-field class="example-full-width" appearance="outline" fxFlex="50%" fxFlex.xs="100%">
             <mat-label>Enter Student SGPA</mat-label>
-            <input matInput placeholder="Enter SGPA here " formControlName="SGPA" [readonly]="isReadonly">
+            <input matInput placeholder="Enter SGPA here " formControlName="sgpa" [readonly]="isReadonly">
         </mat-form-field>
     </div>
 
@@ -37,27 +41,33 @@
         fxLayoutAlign.xs="center start">
         <mat-form-field class="example-full-width" appearance="outline" fxFlex="50%" fxFlex.xs="100%">
             <mat-label>Enter Student CGPA</mat-label>
-            <input matInput placeholder="Enter CGPA here" formControlName="CGP" [readonly]="isReadonly">
+            <input matInput placeholder="Enter CGPA here" formControlName="cgpa" [readonly]="isReadonly">
         </mat-form-field>
         <mat-form-field appearance="outline" class="example-full-width" fxFlex="50%" fxFlex.xs="100%">
             <mat-label>Choose a examination date</mat-label>
             <input matInput [matDatepicker]="picker" placeholder="DD/MM/YYYY" formControlName="examinationDate"
                 [readonly]="isReadonly">
+            @if (!isReadonly) {
             <mat-datepicker-toggle matIconSuffix [for]="picker">
                 <mat-icon matDatepickerToggleIcon>keyboard_arrow_down</mat-icon>
             </mat-datepicker-toggle>
+            }
             <mat-datepicker #picker></mat-datepicker>
+
         </mat-form-field>
     </div>
     <div fxLayout="row wrap" fxLayout.xs="column" fxLayoutAlign="start center" fxLayoutGap="20px grid"
         fxLayoutAlign.xs="center start">
-        <mat-form-field appearance="outline" class="example-full-width" fxFlex="50%" fxFlex.xs="100%">
+        <mat-form-field appearance="outline" class="example-full-width" fxFlex="50%" fxFlex.xs="100%"
+            disabled="isReadonly">
             <mat-label>Choose a issue Date</mat-label>
             <input matInput [matDatepicker]="picker2" placeholder="DD/MM/YYYY" formControlName="issueDate"
                 [readonly]="isReadonly">
+            @if (!isReadonly) {
             <mat-datepicker-toggle matIconSuffix [for]="picker2">
                 <mat-icon matDatepickerToggleIcon>keyboard_arrow_down</mat-icon>
             </mat-datepicker-toggle>
+            }
             <mat-datepicker #picker2></mat-datepicker>
         </mat-form-field>
         <mat-checkbox fxFlex="50" fxFlex.xs="100%" class="example-margin" required>Check me!</mat-checkbox>
@@ -87,9 +97,16 @@
 
     <div class="btn" fxLayout="row" fxLayout.xs="column" fxLayoutAlign="start center" fxLayoutGap="20px"
         fxLayoutAlign.xs="center center">
+        @if (data.marksheet.markSheetId != 0 && !data.view) {
+        <button type="submit" mat-raised-button color="primary"><mat-icon>create</mat-icon> Update MarkSheet</button>
+
+        }
+        @else if (!isReadonly) {
         <button type="submit" mat-raised-button color="primary"><mat-icon>create</mat-icon> Add MarkSheet</button>
         <button type="reset" mat-raised-button color="warn"><mat-icon>cached</mat-icon>Reset</button>
-
+        } @else {
+        <button mat-raised-button color="warn" (click)="close()"><mat-icon>close</mat-icon>Close</button>
+        }
     </div>
 
 

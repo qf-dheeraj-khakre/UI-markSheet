@@ -27,8 +27,8 @@ export class MarksheetService {
   DeleteMarkSheet(id: number): Observable<MarkSheet> {
     return this.Http.delete<MarkSheet>(`http://localhost:5173/api/MarkSheet/${id}`);
   }
-  GetMarkSheetById(id: number): Observable<MarkSheet[]> {
-    return this.Http.get<MarkSheet[]>(`http://localhost:5173/api/MarkSheet/ById${id}`);
+  GetMarkSheetById(id: number): Observable<MarkSheet> {
+    return this.Http.get<MarkSheet>(`http://localhost:5173/api/MarkSheet/ById${id}`);
   }
 
 }

@@ -39,7 +39,8 @@ import { ProgressSpinnerComponent } from '../../../shared/spinner/progress-spinn
   styleUrl: './mark-sheet-form.component.css'
 })
 export class MarkSheetFormComponent implements OnInit {
-  isReadonly: BooleanInput;
+
+  isReadonly: boolean = false;
   markSheetForm!: FormGroup;
   markSheet = new MarkSheet();
   panelOpenState: boolean = false;
@@ -54,12 +55,17 @@ export class MarkSheetFormComponent implements OnInit {
     @Inject(MAT_DIALOG_DATA) public data: any
   ) { }
   ngOnInit(): void {
+    if (this.data.marksheet.markSheetId != 0) {
+      this.markSheet = this.data.marksheet;
+      this.isReadonly = this.data.view;
+      console.log(this.markSheet);
+    }
     this.markSheetForm = this.fb.group({
       semester: [this.markSheet.semester || '', Validators.required],
       status: [this.markSheet.status || '', Validators.required],
       result: [this.markSheet.result || 0, Validators.required],
-      SGPA: [this.markSheet.SGPA || 0, Validators.required],
-      CGP: [this.markSheet.CGP || 0, Validators.required],
+      sgpa: [this.markSheet.sgpa || 0, Validators.required],
+      cgpa: [this.markSheet.cgpa || 0, Validators.required],
       examinationDate: [this.markSheet.examinationDate || "", [dateRangeValidator, Validators.required]],
       issueDate: [this.markSheet.issueDate || "", [dateRangeValidator, Validators.required]]
     })
@@ -70,22 +76,50 @@ export class MarkSheetFormComponent implements OnInit {
     this.markSheet = this.markSheetForm.value;
     this, this.markSheet.StudentId = this.data.studentId;
     console.log(this.markSheet);
-    this.MSService.AddMarkSheet(this.markSheet).subscribe({
-      next: res => {
-        this._snackBar.open("MarkSheet  Added Successfully ", 'Action', {
-          duration: 3000
-        });
-        overlay.detach();
-        this._router.navigate(["/marksheet", res.StudentId]);
-        this._dialogRef.close();
-      },
-      error: er => {
-        this._snackBar.open("Something went wrong while adding markSheet, please try again later", 'Action', {
-          duration: 3000
-        });
-        overlay.detach();
-      }
-    })
+    if (this.data.marksheet.markSheetId == 0) {
+      this.MSService.AddMarkSheet(this.markSheet).subscribe({
+        next: res => {
+          this._snackBar.open("MarkSheet  Added Successfully ", 'Action', {
+            duration: 3000
+          });
+          overlay.detach();
+          this._dialogRef.close();
+          this._router.navigate(["/marksheet", res.StudentId]);
+
+        },
+        error: er => {
+          this._snackBar.open("Something went wrong while adding markSheet, please try again later", 'Action', {
+            duration: 3000
+          });
+          overlay.detach();
+        }
+      })
+    } else {
+
+      this.markSheet.markSheetId = this.data.marksheet.markSheetId;
+      console.log(this.markSheet);
+      this.MSService.EditMarkSheet(this.markSheet).subscribe({
+        next: res => {
+          this._snackBar.open("MarkSheet  edit Successfully ", 'Action', {
+            duration: 3000
+          });
+          overlay.detach();
+          this._dialogRef.close();
+          this._router.navigate(["/marksheet", res.StudentId]);
+
+        },
+        error: er => {
+          this._snackBar.open("Something went wrong while adding markSheet, please try again later", 'Action', {
+            duration: 3000
+          });
+          overlay.detach();
+        }
+      })
+    }
+
+  }
+  close() {
+    this._dialogRef.close();
   }
 }
 
