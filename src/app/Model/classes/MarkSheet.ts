@@ -9,8 +9,8 @@ export class MarkSheet {
     public status: string
     public result: string
     public subjects: Subject[]
-    public SGPA: number
-    public CGP: number
+    public sgpa: number
+    public cgpa: number
     public issueDate: string
     public StudentId: number
 
@@ -21,8 +21,8 @@ export class MarkSheet {
         this.status = ""
         this.result = ""
         this.subjects = []
-        this.SGPA = 0
-        this.CGP = 0
+        this.sgpa = 0
+        this.cgpa = 0
         this.issueDate = ''
         this.StudentId = 0
 
