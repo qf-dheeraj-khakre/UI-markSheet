@@ -18,8 +18,8 @@ export class SubjectService {
   GetAllSubject(): Observable<Subject[]> {
     return this.Http.get<Subject[]>("https://localhost:7252/api/Subject");
   }
-  DeleteSubject(): Observable<Subject> {
-    return this.Http.delete<Subject>("https://localhost:7252/api/Subject");
+  DeleteSubject(id: number): Observable<Subject> {
+    return this.Http.delete<Subject>(`https://localhost:7252/api/Subject/${id}`);
   }
 
   AddSubject(subject: Subject): Observable<Subject> {

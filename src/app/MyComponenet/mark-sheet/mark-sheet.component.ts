@@ -143,10 +143,7 @@ export class MarkSheetComponent implements OnInit {
           duration: 3000
         });
       }
-
     })
-
-
   }
   DownloadMarksheet(markSheetId: number) {
 

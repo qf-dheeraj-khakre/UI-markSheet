@@ -46,7 +46,7 @@
                     <button mat-button matTooltip=" Edit Subject" (click)="EditSubject()"><mat-icon
                             class="large-icon">edit</mat-icon>
                     </button>
-                    <button mat-button matTooltip="delete subject section" (click)="deleteSubject()">
+                    <button mat-button matTooltip="delete subject section" (click)="deleteSubject(element.id)">
                         <mat-icon>delete</mat-icon>
                     </button>
                 </td>
@@ -59,3 +59,6 @@
     </div>
 
 </div>
+@if(subjects.length==0){
+<h1 fxLayoutAlign="center center">No item exist</h1>
+}

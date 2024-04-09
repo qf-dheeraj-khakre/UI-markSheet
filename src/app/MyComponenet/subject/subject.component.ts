@@ -16,6 +16,7 @@ import { MatDividerModule } from '@angular/material/divider';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatSelectModule } from '@angular/material/select';
 import { MatInputModule } from '@angular/material/input';
+import { SubjectFormComponent } from './subject-form/subject-form.component';
 
 @Component({
   selector: 'app-subject',
@@ -34,21 +35,10 @@ import { MatInputModule } from '@angular/material/input';
   styleUrl: './subject.component.css'
 })
 export class SubjectComponent implements OnInit {
-  openDialog() {
-    throw new Error('Method not implemented.');
-  }
-  deleteSubject() {
-    throw new Error('Method not implemented.');
-  }
-  EditSubject() {
-    throw new Error('Method not implemented.');
-  }
-  ViewSubject() {
-    throw new Error('Method not implemented.');
-  }
+
   displayedColumns: string[] = ['position', 'SubjectCode', 'SubjectName', 'TotalMark', 'EarnMarks', 'Grade', 'Operation'];
 
-
+  marksheetId: string | null = ''
   subjects: Subject[] = []
   constructor(
     private route: ActivatedRoute,
@@ -61,12 +51,12 @@ export class SubjectComponent implements OnInit {
   ) { }
 
   ngOnInit() {
-    const subjectId = this.route.snapshot.paramMap.get('subjectId');
-    console.log(subjectId);
+    this.marksheetId = this.route.snapshot.paramMap.get('subjectId');
+    console.log(this.marksheetId);
     let overlay: OverlayRef;
     overlay = this._previewProgressSpinner.open({ hasBackdrop: true }, ProgressSpinnerComponent);
-    if (subjectId !== null) {
-      this.subjectService.GetSubjectByMSId(parseInt(subjectId)).subscribe({
+    if (this.marksheetId !== null) {
+      this.subjectService.GetSubjectByMSId(parseInt(this.marksheetId)).subscribe({
         next: res => {
           console.log(res);
           this.subjects = res;
@@ -79,5 +69,42 @@ export class SubjectComponent implements OnInit {
         }
       })
     }
+  }
+  openDialog() {
+    const dialogRef = this.dialog.open(SubjectFormComponent,
+      {
+        width: '90vw',
+        maxHeight: '90vh',
+        minHeight: '50vh',
+        data: { marksheetid: this.marksheetId, view: false },
+        scrollStrategy: this.overlay.scrollStrategies.noop()
+      }
+    );
+  }
+  deleteSubject(id: number) {
+
+    let overlay: OverlayRef;
+    overlay = this._previewProgressSpinner.open({ hasBackdrop: true }, ProgressSpinnerComponent);
+    this.subjectService.DeleteSubject(id).subscribe({
+      next: res => {
+        overlay.detach();
+        this._snackBar.open('MarkSheet deleted', 'Action', {
+          duration: 3000
+        });
+      },
+      error: er => {
+        overlay.detach();
+        this._snackBar.open('Something went wrong while adding markSheet, please try again later', 'Action', {
+          duration: 3000
+        });
+        console.log(er);
+      }
+    })
+  }
+  EditSubject() {
+    throw new Error('Method not implemented.');
+  }
+  ViewSubject() {
+    throw new Error('Method not implemented.');
   }
 }
