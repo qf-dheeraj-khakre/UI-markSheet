@@ -40,10 +40,10 @@
                 <th mat-header-cell *matHeaderCellDef>Operation</th>
                 <td mat-cell *matCellDef="let element">
 
-                    <button mat-button matTooltip="View subject" (click)="ViewSubject()">
+                    <button mat-button matTooltip="View subject" (click)="ViewSubject(element.id)">
                         <mat-icon>visibility</mat-icon>
                     </button>
-                    <button mat-button matTooltip=" Edit Subject" (click)="EditSubject()"><mat-icon
+                    <button mat-button matTooltip=" Edit Subject" (click)="EditSubject(element.id)"><mat-icon
                             class="large-icon">edit</mat-icon>
                     </button>
                     <button mat-button matTooltip="delete subject section" (click)="deleteSubject(element.id)">

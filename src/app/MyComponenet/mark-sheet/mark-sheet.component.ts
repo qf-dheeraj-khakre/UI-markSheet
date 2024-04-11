@@ -72,6 +72,7 @@ export class MarkSheetComponent implements OnInit {
     });
   }
   openDialog() {
+    this.marksheet = new MarkSheet();
     const dialogRef = this.dialog.open(MarkSheetFormComponent,
       {
         width: '90vw',
@@ -81,6 +82,7 @@ export class MarkSheetComponent implements OnInit {
         scrollStrategy: this.overlay.scrollStrategies.noop()
       }
     );
+    this.AfterClosedDialog(dialogRef);
 
   }
   AddSubject(id: number) {
@@ -102,9 +104,8 @@ export class MarkSheetComponent implements OnInit {
         minHeight: '50vh',
         data: { studentId: this.stdentId, marksheet: this.marksheet, view: true },
         scrollStrategy: this.overlay.scrollStrategies.noop()
-      }
+      });
 
-    );
   }
   EditMarksheet(markSheetId: number) {
     let overlay: OverlayRef;
@@ -125,6 +126,7 @@ export class MarkSheetComponent implements OnInit {
       }
 
     );
+    this.AfterClosedDialog(dialogRef);
 
   }
   DeleteMarksheet(markSheetId: number) {
@@ -146,6 +148,32 @@ export class MarkSheetComponent implements OnInit {
     })
   }
   DownloadMarksheet(markSheetId: number) {
+
+  }
+  AfterClosedDialog(dialogRef: any) {
+    dialogRef.afterClosed().subscribe(() => {
+      let overlay: OverlayRef;
+      overlay = this._previewProgressSpinner.open({ hasBackdrop: true }, ProgressSpinnerComponent);
+      this.activeRout.params.subscribe(id => {
+        this.stdentId = id['id'];
+        this.marksheetService.GetMarkSheetByStudentId(id['id']).subscribe({
+          next: rep => {
+            console.log(rep);
+            this.marksheets = rep;
+            console.log(this.marksheets);
+            overlay.detach();
+          },
+          error: er => {
+            console.log(er);
+            overlay.detach();
+          }
+        })
+
+      });
+
+
+
+    });
 
   }
 }

@@ -84,7 +84,7 @@ export class MarkSheetFormComponent implements OnInit {
           });
           overlay.detach();
           this._dialogRef.close();
-          this._router.navigate(["/marksheet", res.StudentId]);
+          // this._router.navigate(["/marksheet", res.StudentId]);
 
         },
         error: er => {
@@ -105,7 +105,7 @@ export class MarkSheetFormComponent implements OnInit {
           });
           overlay.detach();
           this._dialogRef.close();
-          this._router.navigate(["/marksheet", res.StudentId]);
+          //  this._router.navigate(["/marksheet", res.StudentId]);
 
         },
         error: er => {

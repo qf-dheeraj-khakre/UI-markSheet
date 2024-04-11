@@ -70,16 +70,16 @@
 
     <div class="btn" fxLayout="row" fxLayout.xs="column" fxLayoutAlign="start center" fxLayoutGap="20px"
         fxLayoutAlign.xs="center center">
-        <!-- @if () {
+        @if (data.subject.id!=0&& !data.view ) {
         <button type="submit" mat-raised-button color="primary"><mat-icon>create</mat-icon> Update MarkSheet</button>
 
         }
-        @else if (!isReadonly) { -->
+        @else if (!data.view) {
         <button type="submit" mat-raised-button color="primary"><mat-icon>create</mat-icon> Add Subject</button>
         <button type="reset" mat-raised-button color="warn"><mat-icon>cached</mat-icon>Reset</button>
-        <!-- } @else {
+        } @else {
         <button mat-raised-button color="warn" (click)="close()"><mat-icon>close</mat-icon>Close</button>
-        } -->
+        }
     </div>
 
 

@@ -40,6 +40,7 @@ export class SubjectComponent implements OnInit {
 
   marksheetId: string | null = ''
   subjects: Subject[] = []
+  subject = new Subject();
   constructor(
     private route: ActivatedRoute,
     public subjectService: SubjectService,
@@ -71,18 +72,19 @@ export class SubjectComponent implements OnInit {
     }
   }
   openDialog() {
+    this.subject = new Subject();
     const dialogRef = this.dialog.open(SubjectFormComponent,
       {
         width: '90vw',
         maxHeight: '90vh',
         minHeight: '50vh',
-        data: { marksheetid: this.marksheetId, view: false },
+        data: { marksheetid: this.marksheetId, subject: this.subject, view: false },
         scrollStrategy: this.overlay.scrollStrategies.noop()
       }
     );
+    this.afterCloseDialog(dialogRef);
   }
   deleteSubject(id: number) {
-
     let overlay: OverlayRef;
     overlay = this._previewProgressSpinner.open({ hasBackdrop: true }, ProgressSpinnerComponent);
     this.subjectService.DeleteSubject(id).subscribe({
@@ -101,10 +103,56 @@ export class SubjectComponent implements OnInit {
       }
     })
   }
-  EditSubject() {
-    throw new Error('Method not implemented.');
+  EditSubject(id: number) {
+    this.subject = (this.subjects.filter(s => s.id == id))[0];
+    const dialogRef = this.dialog.open(SubjectFormComponent,
+      {
+        width: '90vw',
+        maxHeight: '90vh',
+        minHeight: '50vh',
+        data: { marksheetid: this.marksheetId, subject: this.subject, view: false },
+        scrollStrategy: this.overlay.scrollStrategies.noop()
+      }
+    );
+    this._snackBar.open('Edit Mode On', 'Action', {
+      duration: 3000
+    });
+    this.afterCloseDialog(dialogRef);
   }
-  ViewSubject() {
-    throw new Error('Method not implemented.');
+  ViewSubject(id: number) {
+    this.subject = (this.subjects.filter(s => s.id == id))[0];
+    const dialogRef = this.dialog.open(SubjectFormComponent,
+      {
+        width: '90vw',
+        maxHeight: '90vh',
+        minHeight: '50vh',
+        data: { marksheetid: this.marksheetId, subject: this.subject, view: true },
+        scrollStrategy: this.overlay.scrollStrategies.noop()
+      }
+    );
+    this._snackBar.open('View Mode On', 'Action', {
+      duration: 3000
+    });
+
+  }
+  afterCloseDialog(dialogRef: any) {
+    dialogRef.afterClosed().subscribe(() => {
+      let overlay: OverlayRef;
+      overlay = this._previewProgressSpinner.open({ hasBackdrop: true }, ProgressSpinnerComponent);
+      if (this.marksheetId !== null) {
+        this.subjectService.GetSubjectByMSId(parseInt(this.marksheetId)).subscribe({
+          next: res => {
+            console.log(res);
+            this.subjects = res;
+            console.log(this.subjects);
+            overlay.detach();
+          },
+          error: er => {
+            console.log(er);
+            overlay.detach();
+          }
+        })
+      }
+    });
   }
 }

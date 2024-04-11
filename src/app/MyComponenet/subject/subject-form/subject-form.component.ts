@@ -53,6 +53,10 @@ export class SubjectFormComponent implements OnInit {
     @Inject(MAT_DIALOG_DATA) public data: any
   ) { }
   ngOnInit(): void {
+    if (this.data.subject.id != 0) {
+      this.Subject = this.data.subject;
+      this.isReadonly = this.data.view;
+    }
     this.SubjectForm = this.fb.group({
       subjectCode: [this.Subject.subjectCode, Validators.required],
       subjectName: [this.Subject.subjectName, Validators.required],
@@ -70,9 +74,30 @@ export class SubjectFormComponent implements OnInit {
     this.Subject = this.SubjectForm.value
     if (this.data.marksheetid != null) {
       this.Subject.marksheetid = parseInt(this.data.marksheetid);
-      this.subjectService.AddSubject(this.Subject).subscribe({
+      if (this.data.subject.id == 0) {
+
+        this.subjectService.AddSubject(this.Subject).subscribe({
+          next: res => {
+            this._snackBar.open("Subject  Added Successfully ", 'Action', {
+              duration: 3000
+            });
+            overlay.detach();
+            this._dialogRef.close();
+            this._router.navigate(['../subject', res.marksheetid], { relativeTo: this.route });
+
+          },
+          error: er => {
+            this._snackBar.open("Something went wrong while adding markSheet, please try again later", 'Action', {
+              duration: 3000
+            });
+            overlay.detach();
+          }
+        })
+      }
+    } else {
+      this.subjectService.EditSubject(this.Subject).subscribe({
         next: res => {
-          this._snackBar.open("Subject  Added Successfully ", 'Action', {
+          this._snackBar.open("Subject  Edit Successfully ", 'Action', {
             duration: 3000
           });
           overlay.detach();
