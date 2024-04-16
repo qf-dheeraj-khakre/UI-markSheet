@@ -1,5 +1,5 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
-import { RouterOutlet } from '@angular/router';
+import { Router, RouterOutlet } from '@angular/router';
 import { FooterComponent } from './MyComponenet/Layout/footer/footer.component';
 import { HeaderComponent } from './MyComponenet/Layout/header/header.component';
 import { HttpClientModule } from '@angular/common/http';
@@ -32,6 +32,14 @@ import { MatButtonModule } from '@angular/material/button';
   styleUrl: './app.component.css'
 })
 export class AppComponent {
+  constructor(public router: Router) { }
+
+  IdCardTamplete() {
+    throw new Error('Method not implemented.');
+  }
+  GotoTamplete() {
+    this.router.navigate(['/marksheetTamplate'])
+  }
 
   title = 'UI-markSheet';
 

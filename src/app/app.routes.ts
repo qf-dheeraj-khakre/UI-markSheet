@@ -3,6 +3,8 @@ import { DashboardComponent } from './MyComponenet/dashboard/dashboard.component
 import { AppComponent } from './app.component';
 import { MarkSheetComponent } from './MyComponenet/mark-sheet/mark-sheet.component';
 import { SubjectComponent } from './MyComponenet/subject/subject.component';
+import { CKEditorComponent } from './MyComponenet/MarkS-tamplate/ckeditor/ckeditor.component';
+import { MarksheetTamplateComponent } from './MyComponenet/MarkS-tamplate/marksheet-tamplate/marksheet-tamplate.component';
 
 export const routes: Routes = [
     {
@@ -29,7 +31,19 @@ export const routes: Routes = [
                 pathMatch: "full"
             }
         ]
+    },
+    {
+        path: "marksheetTamplate",
+        component: MarksheetTamplateComponent,
+        children: [
+            {
+                path: 'editor',
+                component: CKEditorComponent
+            }
+        ]
     }
+
+
 
 
 
