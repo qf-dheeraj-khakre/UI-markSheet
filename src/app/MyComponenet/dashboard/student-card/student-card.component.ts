@@ -67,50 +67,36 @@ export class StudentCardComponent implements OnInit {
     let overlay: OverlayRef;
     overlay = this._previewProgressSpinner.open({ hasBackdrop: true }, ProgressSpinnerComponent);
     let student = new Student();
-    this.StudentService.GetStudetnBtId(id).subscribe({
-      next: rep => {
-        student = rep;
-        const dialogRef = this.dialog.open(StudentFormComponent,
-          {
-            width: '90vw',
-            maxHeight: '90vh',
-            minHeight: '50vh',
-            data: { student: student, view: false },
-            scrollStrategy: this.overlay.scrollStrategies.noop()
-          }
-        );
-        overlay.detach();
-      },
-      error: error => {
-        console.log(error);
-        overlay.detach();
+    student = (this.students.filter(s => s.studentRollNumber == id))[0];
+    const dialogRef = this.dialog.open(StudentFormComponent,
+      {
+        width: '90vw',
+        maxHeight: '90vh',
+        minHeight: '50vh',
+        data: { student: student, view: false },
+        scrollStrategy: this.overlay.scrollStrategies.noop()
       }
-    })
+    );
+    overlay.detach();
+    this.AfterClosedDialog(dialogRef);
   }
   ViewStudent(id: string) {
     let overlay: OverlayRef;
     overlay = this._previewProgressSpinner.open({ hasBackdrop: true }, ProgressSpinnerComponent);
-
     let student = new Student();
-    this.StudentService.GetStudetnBtId(id).subscribe({
-      next: rep => {
-        student = rep;
-        const dialogRef = this.dialog.open(StudentFormComponent,
-          {
-            width: '90vw',
-            maxHeight: '90vh',
-            minHeight: '50vh',
-            data: { student: student, view: true },
-            scrollStrategy: this.overlay.scrollStrategies.noop()
-          }
-        );
-        overlay.detach();
-      },
-      error: error => {
-        console.log(error);
-        overlay.detach();
+    student = (this.students.filter(s => s.studentRollNumber == id))[0];
+    const dialogRef = this.dialog.open(StudentFormComponent,
+      {
+        width: '90vw',
+        maxHeight: '90vh',
+        minHeight: '50vh',
+        data: { student: student, view: true },
+        scrollStrategy: this.overlay.scrollStrategies.noop()
       }
-    })
+    );
+    overlay.detach();
+    this.AfterClosedDialog(dialogRef);
+
   }
   GotoMarksheet(id: string) {
     let overlay: OverlayRef;
@@ -128,15 +114,15 @@ export class StudentCardComponent implements OnInit {
       }
     })
   }
-  public student: Student[] = [];
+  public students: Student[] = [];
   ngOnInit(): void {
     let overlay: OverlayRef;
     overlay = this._previewProgressSpinner.open({ hasBackdrop: true }, ProgressSpinnerComponent);
     this.StudentService.GetAllStudent().subscribe({
       next: res => {
         console.log(res);
-        this.student = res;
-        console.log(this.student);
+        this.students = res;
+        console.log(this.students);
         overlay.detach();
       },
       error: error => {
@@ -144,5 +130,23 @@ export class StudentCardComponent implements OnInit {
         overlay.detach();
       }
     })
+  }
+  AfterClosedDialog(dialogRef: any) {
+    dialogRef.afterClosed().subscribe(() => {
+      let overlay: OverlayRef;
+      overlay = this._previewProgressSpinner.open({ hasBackdrop: true }, ProgressSpinnerComponent);
+      this.StudentService.GetAllStudent().subscribe({
+        next: res => {
+          console.log(res);
+          this.students = res;
+          console.log(this.students);
+          overlay.detach();
+        },
+        error: error => {
+          console.log(error);
+          overlay.detach();
+        }
+      })
+    });
   }
 }

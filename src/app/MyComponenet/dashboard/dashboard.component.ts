@@ -66,7 +66,7 @@ export class DashboardComponent {
     );
 
     dialogRef.afterClosed().subscribe(result => {
-      console.log('The dialog was closed');
+
 
     });
 

@@ -85,7 +85,6 @@ export class StudentFormComponent implements OnInit {
             overlay.detach();
             this._router.navigate(["/deshboard"]);
             this._dialogRef.close();
-
           },
           error: res => {
             this._snackBar.open("Something went wrong while adding student, please try again later", 'Action', {

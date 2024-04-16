@@ -1,15 +1,13 @@
 <div fxLayout="row wrap" fxLayout.xs="column" fxLayoutAlign="
 space-around center" fxLayoutAlign.xs="center
 start" fxLayoutGap="25px grid">
-    @for (item of student; track $index) {
+    @for (item of students; track $index) {
     <div class="card" fxFlex="25%" fxFlex.xs="100%">
-
         <mat-card class="custom-card">
             <h2 class="header"><mat-icon class="pro-icon">account_circle</mat-icon>Student Profile</h2>
             <mat-card-header>
                 <mat-card-title>Student Name : <b>{{item?.name}}</b></mat-card-title>
                 <mat-card-subtitle>Roll-Number: <i>{{item?.studentRollNumber}}</i></mat-card-subtitle>
-
             </mat-card-header>
             <mat-card-actions align="end">
                 <button mat-icon-button matTooltip="Go to Marksheet"
@@ -22,12 +20,9 @@ start" fxLayoutGap="25px grid">
                     <mat-icon>delete</mat-icon></button>
             </mat-card-actions>
         </mat-card>
-
-
     </div>
-
-
-    }@empty {
-    <h1 fxLayoutAlign="center center">No item exist</h1>
     }
 </div>
+@if (students.length==0) {
+<h1 fxLayoutAlign="center center">No item exist</h1>
+}
